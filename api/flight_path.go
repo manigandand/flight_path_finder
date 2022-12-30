@@ -4,9 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/manigandand/adk/api"
 	"github.com/manigandand/adk/errors"
 	"github.com/manigandand/adk/respond"
 )
+
+type flightPathReq struct {
+	Paths []flightRoute `json:"paths"`
+}
 
 type flightPathResponse struct {
 	Result     []string `json:"result"`
@@ -14,8 +19,16 @@ type flightPathResponse struct {
 }
 
 func flightPathCalculatorHandler(w http.ResponseWriter, r *http.Request) *errors.AppError {
-	// ctx := r.Context()
-	respond.OK(w, "todo..")
+	var payload flightPathReq
+	if err := api.Decode(r, &payload); err.NotNil() {
+		return err
+	}
+	resp, err := flightPathCalculator(payload.Paths)
+	if err.NotNil() {
+		return err
+	}
+
+	respond.OK(w, resp)
 	return nil
 }
 

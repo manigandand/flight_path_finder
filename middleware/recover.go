@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"runtime/debug"
@@ -29,7 +30,9 @@ func Recoverer(next http.Handler) http.Handler {
 
 				// TODO: Let devloper know the panic
 				// Log into sentry/..
-				respond.Fail(w, errors.InternalServerStd())
+				if err := respond.Fail(w, errors.InternalServerStd()); err.NotNil() {
+					log.Println(err)
+				}
 				return
 			}
 		}()

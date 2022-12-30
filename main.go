@@ -26,7 +26,7 @@ func main() {
 	adkapi.InitService(name, version)
 
 	router := chi.NewRouter()
-	cors := cors.New(cors.Options{
+	appcors := cors.New(cors.Options{
 		AllowedOrigins: []string{"*"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "PATCH", "OPTIONS", "DELETE"},
 		AllowedHeaders: []string{
@@ -42,7 +42,7 @@ func main() {
 	})
 
 	// cross & loger middleware
-	router.Use(cors.Handler)
+	router.Use(appcors.Handler)
 	router.Use(
 		middleware.Logger,
 		appmiddleware.Recoverer,

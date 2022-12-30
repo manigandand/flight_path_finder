@@ -28,8 +28,7 @@ func flightPathCalculatorHandler(w http.ResponseWriter, r *http.Request) *errors
 		return err
 	}
 
-	respond.OK(w, resp)
-	return nil
+	return respond.OK(w, resp)
 }
 
 type flightRoute []string

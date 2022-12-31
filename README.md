@@ -1,4 +1,4 @@
-## volume.finance
+## flight path calculator
 
 ### Few Assumptions:
 
